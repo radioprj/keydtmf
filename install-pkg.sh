@@ -12,8 +12,8 @@ if [ $dis == "Raspbian" ] || [ $dis == "Debian" ]; then
     echo ""
     sudo apt-get update
     sudo apt install -y python3 python3-pip python3-smbus python3-dev i2c-tools
-    sudo python3 -m pip install --upgrade setuptools
-    sudo python3 -m pip install smbus2
+    sudo python3 -m pip install --upgrade setuptools --root-user-action=ignore
+    sudo python3 -m pip install smbus2 --root-user-action=ignore
     sudo usermod -a -G i2c svxlink
     sudo chown svxlink:svxlink /opt/fmpoland/keydtmf/keydtmf.py
     sudo chown svxlink:svxlink /opt/fmpoland/keydtmf/keydtmf.ini
