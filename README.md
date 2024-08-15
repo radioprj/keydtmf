@@ -21,4 +21,4 @@ jeśli nie masz katalogu "fmpoland" utwórz go poleceniem
 
 **cd keydtmf/**
 
-Czytaj plik opis.txt gdzie znajdziesz informacje o konfiguracji i plik [keydtmf.pdf](https://github.com/radioprj/keydtmf/blob/main/keydtmf.pdf) opis podłączenia keypad do PCF8574
+Czytaj plik [opis.txt](https://github.com/radioprj/keydtmf/blob/main/opis.txt) gdzie znajdziesz informacje o konfiguracji i plik [keydtmf.pdf](https://github.com/radioprj/keydtmf/blob/main/keydtmf.pdf) opis podłączenia keypad do PCF8574
