@@ -55,14 +55,10 @@ class MyKeyboard:
     #set pcf to input
     self.bus.write_byte(self.I2CAddress,0xff)
 
-
-    
-
     #ReadRawKey
     #this function will scan and return a key press
     #with no debouncing.
     # it will return None if no or more than a key is pressed on the same row
-    
     
   def ReadRawKey(self):
     #set P4 Low First
@@ -95,7 +91,6 @@ class MyKeyboard:
    #ok put Lastvalue to be CurrentValue
    self.CurrentKey=LastKey
    return self.CurrentKey
-
 
 if __name__ == "__main__":
 
