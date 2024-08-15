@@ -1,11 +1,11 @@
-# keydtmf
-Keypad DTMF for  SVXLink
+# Keypad 4x4 DTMF for  SVXLink
 
 Wykorzystanie keypad 4x4 z modułem PCF8574 do wysyłania komend DTMF do SVXLink
 
-keypad 4x4 podłączone via moduł PCF8574 I2C do Raspberry PI (RaspbianOS), Orange Pi Zero (ArmBian)
+keypad 4x4 podłączony via moduł **PCF8574* I2C do Raspberry PI (RaspbianOS), Orange Pi Zero (ArmBian)
 
 Instalacja pakietu
+---------------------
 
 **sudo -s**
 
