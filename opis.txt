@@ -1,7 +1,7 @@
 Zobacz plik PDF (keydmtf.pdf) w którym masz pokazane jak podłaczyć klawiature
 do modułu PCF8574. Plik dostępny w tym katalogu lub poprzez link
 
-https://githun/radioprj/keydtmf/keydtmf.pdf
+https://github.com/radioprj/keydtmf/blob/main/keydtmf.pdf
 
 
 Poniżej opis instalacji i konfiguracji:
