@@ -1,0 +1,14 @@
+[Unit]
+Description=Keypad 4x4 DTMF for svxlink
+After=multi-user.target svxlink.service
+
+[Service]
+User=svxlink
+WorkingDirectory=/opt/fmpoland/keydtmf
+ExecStart=/usr/bin/nice -n 10 /usr/bin/python3 /opt/fmpoland/keydtmf/keydtmf.py
+Restart=always
+RestartSec=60
+Nice=-10
+
+[Install]
+WantedBy=multi-user.target

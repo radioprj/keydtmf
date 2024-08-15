@@ -1,0 +1,181 @@
+Zobacz plik PDF (keydmtf.pdf) w którym masz pokazane jak podłaczyć klawiature
+do modułu PCF8574. Plik dostępny w tym katalogu lub poprzez link
+
+https://githun/radioprj/keydtmf/keydtmf.pdf
+
+
+Poniżej opis instalacji i konfiguracji:
+
+Aktywacja złącze I2C na komputerze:
+
+Dla RPI
+----------------------------------------------------
+Uruchom konfiguracje poleceniem:
+
+sudo raspi-config
+
+Wybierz "Interface Options" -> "I2C"
+
+na pytanie:
+
+"Would you like the ARM I2C interface to be enabled?"
+
+Wybrać "YES"
+
+i zapisać zmiany i zrób następnie reboot komputera
+----------------------------------------------------
+
+
+Dla Orange PI Zero V1 i V3
+----------------------------------------------------
+Uruchom konfiguracje komputera poleceniem
+
+sudo armbin-config
+
+Wybierz z menu SYSTEM -> HARDWARE
+
+Zaznacz klawiszem spacją urządzenie I2C
+
+Dla OZPI V3: [*] i2c3-ph
+Dla OZPI V1: [*] i2c0
+
+Wyjdź z konfiguracji i zrób reboot komputera
+----------------------------------------------------
+
+
+Podłącz modułu PC8574 do na złączu komputera
+--------------------------------------------
+
+VCC  - 3.3V PIN 1
+GND  - GND  PIN 9 lub 6
+SDA  - PIN 3
+SCL  - PIN 5
+
+Sprawdź numery wyprowadzeń na danej wersji komputera
+w opisach złącza aby poprawnie podłączyć
+
+Zainstaluj pakiet do obsługi I2C:
+
+sudo apt-get -y install i2c-tools
+
+Sprawdź czy widać Twój PCF8574 na wykazie szyny I2C poleceniem
+na wwybranym porcie
+
+Dla starszych RPI (256MB) i  OZPI V1:
+-------------------------------------
+sudo i2cdetect –y 0
+
+Dla RPI:
+-------
+sudo i2cdetect –y 1
+
+Dla OZPI V3:
+------------
+sudo i2cdetect –y 2
+
+w poleceniu i2cdetect cyfra po -y to numer portu
+
+Wykonanie tego polecenia zostanie wyświetlony status szyny I2C 
+gdzie powinien być w wykazie PCF8574 pod adresem "20"
+
+Jeśli nie widzisz adresu PCF8574 to musisz rozwiązać problem
+sprzętowy detekcji PCF8574 na szynie I2C zanim przejdziesz do dalszej
+części konfiguracji korzystania z PCF8574
+
+Jeśli masz wynik podobny do poniższego oznacza on
+problem sprzętowy podłączonego PCF8574:
+
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 
+20: 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 
+30: 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 
+40: 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 
+50: 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 
+60: 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 
+70: 70 71 72 73 74 75 76 77                         
+
+
+Przykład prawidłowego wyniku i2cdetect:
+
+    0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: 20 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --                         
+
+
+W pliku keydtmf.ini podawane są ustawienia
+
+Port i adres I2C dla PCF8574:
+
+i2c_port = 1
+i2c_address = 0x20
+
+nazwę i ścieżke do pliku kontrolnego do przesyłania
+komend DTMF do svxlink (plik tworzony przez svxlink
+i definiowany w /etc/svxlink.conf
+
+dmtf_ctrl_file = /tmp/dtmf_svx
+
+Można zdefiniować klawisz który użyty będzie do wyłączenia 
+komputera. Zalecane klawisze: A lub B lub C
+Klawisz D jest używany do wysyłania makro do svxlink
+Jeśli nie chcesz używać klawisza do wyłączenia wpisz
+dużą litere N
+
+poweroff_btn = A
+
+Instalacja pakietów:
+-------------------
+
+Uruchom polecenie aby zainstalować biblioteki:
+
+sudo /opt/fmpoland/oledsvx/install-pkg.sh
+
+----------------------
+
+Uruchamienie obsługi keypad przy starcie sytemu
+
+sudo systemctl enable keydmtf.service
+
+Uruchmienie ręczne
+
+sudo systemctl start keydtmf.service
+
+
+Uwaga dla Raspberry PI
+-----------------------
+Jeśli doświadczasz przypadkowych błędów komunikacji I2C z modułem, 
+możesz spowolnić prędkość zegara RPI na szynie I2C, aby dać modułowi czas na reakcję, 
+wykonując następujące kroki:
+
+Na Raspberry Pi otwórz plik /boot/config.txt, wpisując w oknie terminala następujące polecenie:
+
+ sudo nano /boot/config.txt
+
+Znajdź następującą linię:
+
+ dtparam=i2c_arm=on
+
+Dodaj następujący wiersz poniżej, aby spowolnić zegar I2C do 10 MHz:
+
+ dtparam=i2c_arm_baudrate=10000
+
+
+Zapisz plik i uruchom ponownie Pi
+
+
+Musisz mieć na uwadze że długie kable na szynie I2C mogą generować zakłócenia
+Warto więc stosować krótkie kable (być może ekranowane). Czasami
+może pomóc zastosowanie kondensatorów na linii I2C do masy lub np
+ekranowane kable
+
+UWAGA:
+Wykorzystanie skryptów i opisów używasz na własną odpowiedzialność i 
+autor nie ponosi odpowiedzialności za wykorzystane rozwiązanie 
+i wynikające z niego skutki.
