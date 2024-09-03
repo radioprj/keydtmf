@@ -1,4 +1,4 @@
-# Keypad 4x4 DTMF for  SVXLink
+# Keypad 4x4 DTMF SVXLink
 
 **To jest projekt hobbystyczny i rozwija się w autora własnym tempie.**
 
