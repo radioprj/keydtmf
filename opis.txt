@@ -155,9 +155,11 @@ Jeśli doświadczasz przypadkowych błędów komunikacji I2C z modułem,
 możesz spowolnić prędkość zegara RPI na szynie I2C, aby dać modułowi czas na reakcję, 
 wykonując następujące kroki:
 
-Na Raspberry Pi otwórz plik /boot/config.txt, wpisując w oknie terminala następujące polecenie:
-
- sudo nano /boot/config.txt
+Na Raspberry Pi otwórz plik config.txt, wpisując w oknie terminala następujące polecenie:
+ Debian 11
+  sudo nano /boot/config.txt
+ Debian 12
+  sudo nano /boot/firmware/config.txt
 
 Znajdź następującą linię:
 
