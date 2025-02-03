@@ -1,6 +1,6 @@
 [Unit]
 Description=Keypad 4x4 DTMF for svxlink
-After=multi-user.target svxlink.service
+After=svxlink.service
 
 [Service]
 User=svxlink
