@@ -6,43 +6,6 @@ https://github.com/radioprj/keydtmf/blob/main/keydtmf.pdf
 
 Poniżej opis instalacji i konfiguracji:
 
-Aktywacja złącze I2C na komputerze:
-
-Dla RPI
-----------------------------------------------------
-Uruchom konfiguracje poleceniem:
-
-sudo raspi-config
-
-Wybierz "Interface Options" -> "I2C"
-
-na pytanie:
-
-"Would you like the ARM I2C interface to be enabled?"
-
-Wybrać "YES"
-
-i zapisać zmiany i zrób następnie reboot komputera
-----------------------------------------------------
-
-
-Dla Orange PI Zero V1 i V3
-----------------------------------------------------
-Wpisz w pliku /boot/armbianEnv.txt w linii overlays= 
-
-dla OZIP v3:  i2c3-ph
----------------------
-czyli:
-overlays=uart5-ph i2c3-ph
-
-dla OZPI V1:  i2c0
-----------------
-czyli:
-overlays=analog-codec uart1 uart2 usbhost2 usbhost3 i2c0
-
-zapisz zmiany i zrób reboot komputera
-----------------------------------------------------
-
 
 Podłącz modułu PC8574 do na złączu komputera
 --------------------------------------------
@@ -54,10 +17,6 @@ SCL  - PIN 5
 
 Sprawdź numery wyprowadzeń na danej wersji komputera
 w opisach złącza aby poprawnie podłączyć
-
-Zainstaluj pakiet do obsługi I2C:
-
-sudo apt-get -y install i2c-tools
 
 Sprawdź czy widać Twój PCF8574 na wykazie szyny I2C poleceniem
 na wwybranym porcie
@@ -131,6 +90,57 @@ dużą litere N
 
 poweroff_btn = A
 
+Uruchamienie obsługi keypad przy starcie sytemu
+
+sudo systemctl enable keydmtf.service
+
+Uruchmienie ręczne
+
+sudo systemctl start keydtmf.service
+
+
+
+===============================================
+UWAGA gotowe obrazy mają już aktywowane I2C i zainstalowane
+niezbedne pakiety
+
+Aktywacja złącze I2C na komputerze:
+
+Dla RPI
+----------------------------------------------------
+Uruchom konfiguracje poleceniem:
+
+sudo raspi-config
+
+Wybierz "Interface Options" -> "I2C"
+
+na pytanie:
+
+"Would you like the ARM I2C interface to be enabled?"
+
+Wybrać "YES"
+
+i zapisać zmiany i zrób następnie reboot komputera
+----------------------------------------------------
+
+
+Dla Orange PI Zero V1 i V3
+----------------------------------------------------
+Wpisz w pliku /boot/armbianEnv.txt w linii overlays= 
+
+dla OZIP v3:  i2c3-ph
+---------------------
+czyli:
+overlays=uart5 i2c3-ph
+
+dla OZPI V1:  i2c0
+----------------
+czyli:
+overlays=analog-codec uart1 uart2 usbhost2 usbhost3 i2c0
+
+zapisz zmiany i zrób reboot komputera
+----------------------------------------------------
+
 Instalacja pakietów:
 -------------------
 
@@ -139,14 +149,6 @@ Uruchom polecenie aby zainstalować biblioteki:
 sudo /opt/fmpoland/oledsvx/install-pkg.sh
 
 ----------------------
-
-Uruchamienie obsługi keypad przy starcie sytemu
-
-sudo systemctl enable keydmtf.service
-
-Uruchmienie ręczne
-
-sudo systemctl start keydtmf.service
 
 
 Uwaga dla Raspberry PI
